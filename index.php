@@ -3,15 +3,15 @@ $page_title = 'Parc Informatique DITIB France';
 $current_page = 'dashboard';
 require_once 'dataManager.php';
 
-$totalMateriel = $dataManager->count('materiel');
-$totalLogiciels = $dataManager->count('logiciels');
-$totalReseau = $dataManager->count('reseau');
+$totalMateriel   = $dataManager->count('materiel');
+$totalLogiciels  = $dataManager->count('logiciels');
+$totalReseau     = $dataManager->count('reseau');
+$totalComptes    = $dataManager->count('comptes');
 
 $materiels = $dataManager->read('materiel');
 $equipementsActifs = count(array_filter($materiels, function($m) {
     return isset($m['statut']) && $m['statut'] === 'actif';
 }));
-
 $alertes = count(array_filter($materiels, function($m) {
     return isset($m['statut']) && $m['statut'] === 'maintenance';
 }));
@@ -38,6 +38,7 @@ require_once 'header.php';
         </div>
     </div>
 
+    <!-- Tuiles Applications -->
     <div class="odoo-apps-grid">
         <a href="materiel.php" class="odoo-app-card purple">
             <div class="odoo-app-icon">
@@ -66,7 +67,9 @@ require_once 'header.php';
             <div class="odoo-app-info">
                 <h3 class="odoo-app-title">Logiciels</h3>
                 <p class="odoo-app-desc"><?php echo $totalLogiciels; ?> licences</p>
-                <p class="odoo-app-status"><?php echo number_format($coutTotalLogiciels, 0, ',', ' '); ?> € / an</p>
+                <p class="odoo-app-status">
+                    <?php echo number_format($coutTotalLogiciels, 0, ',', ' '); ?> € / an
+                </p>
             </div>
         </a>
 
@@ -80,6 +83,19 @@ require_once 'header.php';
                 <h3 class="odoo-app-title">Réseau</h3>
                 <p class="odoo-app-desc"><?php echo $totalReseau; ?> équipements</p>
                 <p class="odoo-app-status"><?php echo $reseauActif; ?> opérationnels</p>
+            </div>
+        </a>
+
+        <a href="comptes.php" class="odoo-app-card" style="--app-color: #8b5cf6;">
+            <div class="odoo-app-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
+            </div>
+            <div class="odoo-app-info">
+                <h3 class="odoo-app-title">Comptes</h3>
+                <p class="odoo-app-desc"><?php echo $totalComptes; ?> identifiant<?php echo $totalComptes > 1 ? 's' : ''; ?></p>
+                <p class="odoo-app-status">Accès sécurisés</p>
             </div>
         </a>
 
@@ -97,6 +113,7 @@ require_once 'header.php';
         </a>
     </div>
 
+    <!-- Vue d'ensemble -->
     <div class="content-card" style="margin-top: 2rem;">
         <div class="card-header">
             <h2 class="card-title">Vue d'ensemble</h2>
@@ -132,6 +149,7 @@ require_once 'header.php';
         </div>
     </div>
 
+    <!-- Actions rapides -->
     <div class="content-card">
         <div class="card-header">
             <h2 class="card-title">Actions rapides</h2>
@@ -155,11 +173,11 @@ require_once 'header.php';
                 </svg>
                 <span>Ajouter équipement réseau</span>
             </a>
-            <a href="materiel.php" class="quick-action-btn">
+            <a href="ajout-compte.php" class="quick-action-btn">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                 </svg>
-                <span>Voir tout le matériel</span>
+                <span>Ajouter un compte</span>
             </a>
         </div>
     </div>
