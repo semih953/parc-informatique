@@ -42,6 +42,7 @@ require_once 'header.php';
 
         <div class="content-card">
             <form method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>ID Équipement *</label>

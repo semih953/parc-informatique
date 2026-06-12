@@ -58,6 +58,7 @@ require_once 'header.php';
             </p>
 
             <form method="POST" style="display: flex; gap: 1rem; justify-content: center;">
+                <?php echo csrf_field(); ?>
                 <button type="submit" name="confirmer" class="btn"
                         style="background: #ef4444; color: white; border: none; padding: 0.75rem 2rem; font-size: 1rem; cursor: pointer; border-radius: 8px; font-weight: 600;">
                     Oui, supprimer définitivement

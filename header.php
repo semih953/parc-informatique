@@ -11,6 +11,7 @@ require_once 'auth.php';
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
+    <!-- Sidebar Odoo Style -->
     <div class="sidebar">
         <div class="sidebar-header">
             <a href="index.php" class="sidebar-logo">
@@ -43,12 +44,6 @@ require_once 'auth.php';
                 </svg>
                 Réseau
             </a>
-            <a href="comptes.php" <?php echo ($current_page ?? '') == 'comptes' ? 'class="active"' : ''; ?>>
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                </svg>
-                Comptes
-            </a>
             <a href="ajout-materiel.php" <?php echo ($current_page ?? '') == 'ajouter' ? 'class="active"' : ''; ?>>
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -58,6 +53,12 @@ require_once 'auth.php';
         </nav>
 
         <div class="sidebar-footer">
+            <a href="changer-mdp.php" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0.65rem 1rem; margin-bottom: 0.5rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
+                Mot de passe
+            </a>
             <a href="logout.php" class="btn-logout">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -67,7 +68,9 @@ require_once 'auth.php';
         </div>
     </div>
 
+    <!-- Main Content Wrapper -->
     <div class="main-wrapper">
+        <!-- Top Bar -->
         <div class="topbar">
             <div class="topbar-breadcrumb">
                 <span>DITIB France</span>

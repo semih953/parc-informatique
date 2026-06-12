@@ -41,6 +41,7 @@ require_once 'header.php';
                 </div>
                 <p style="color: #991b1b; margin-bottom: 2rem; font-size: 0.95rem;">⚠️ Cette action est <strong>définitive</strong> et <strong>irréversible</strong>.</p>
                 <form method="POST" style="display: flex; gap: 1rem; justify-content: center;">
+                <?php echo csrf_field(); ?>
                     <button type="submit" name="confirmer" class="btn" style="background: #ef4444; color: white; border: none; padding: 0.75rem 2rem; font-size: 1rem; cursor: pointer; border-radius: 8px; font-weight: 600;">
                         Oui, supprimer définitivement
                     </button>

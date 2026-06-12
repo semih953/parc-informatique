@@ -99,18 +99,7 @@ require_once 'header.php';
             </div>
         </a>
 
-        <a href="ajout-materiel.php" class="odoo-app-card orange">
-            <div class="odoo-app-icon">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-            </div>
-            <div class="odoo-app-info">
-                <h3 class="odoo-app-title">Ajouter</h3>
-                <p class="odoo-app-desc">Nouveau matériel</p>
-                <p class="odoo-app-status">Enregistrer un équipement</p>
-            </div>
-        </a>
+        
     </div>
 
     <!-- Vue d'ensemble -->

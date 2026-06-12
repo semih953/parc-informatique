@@ -1,4 +1,22 @@
-{
-    "username": "oguzhan.yildiz@ditibfrance.fr",
-    "password_hash": "$2y$12$bubb1CwLPWNAK4vmwQpEU.RWDjS8ngc4455YK1OJRfcK2d5Mu8DnG"
-}
+[
+    {
+        "username": "semih@ditibfrance.fr",
+        "password_hash": "$2y$12$wIzAATjE\/9IMwdlovBijAuunthOxkMGKjEHK1j02SSwEkvTRDf\/\/W"
+    },
+    {
+        "username": "oguzhan.yildiz@ditibfrance.fr",
+        "password_hash": "$2y$12$tQC8bnuozAbosy8wP7z1quqxek2\/hJicaVXAbJG6tvX58.JxWDzI6"
+    },
+    {
+        "username": "beytullah.sonkaya@ditibfrance.fr",
+        "password_hash": "$2y$12$iJb59UDKVrUB0hSLI5Ix6.8M5\/dmFOoXAjt1XKYfDRnN4eivT2Pw."
+    },
+    {
+        "username": "mehmet.yuksel@ditibfrance.fr",
+        "password_hash": "$2y$12$Ls.y9F\/.0U50WFUvzYVEouTMJw7Go5mY5c9N5zSNOLFceABYMlb7q"
+    },
+    {
+        "username": "rahman.fatsal@ditibfrance.fr",
+        "password_hash": "$2y$12$vEWK4HiIaBw5get.gyXoxe5uipneCDfAMcBOLmZta9YhU.26ogz7K"
+    }
+]
