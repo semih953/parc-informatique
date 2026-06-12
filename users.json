@@ -18,5 +18,9 @@
     {
         "username": "rahman.fatsal@ditibfrance.fr",
         "password_hash": "$2y$12$vEWK4HiIaBw5get.gyXoxe5uipneCDfAMcBOLmZta9YhU.26ogz7K"
+    },
+    {
+        "username": "emre.auclerc@ditibfrance.fr",
+        "password_hash": "$2y$12$hXtvQR4NO4k0\/OEW0ulf8uqmANqEFytJ2XLbsT2Dj7p\/u43cPXRLm"
     }
 ]
