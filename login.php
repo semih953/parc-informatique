@@ -79,14 +79,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $remaining = ceil((LOCKOUT_SECONDS - (time() - $entry['first'])) / 60);
         $error = "Trop de tentatives échouées. Réessayez dans environ {$remaining} minute(s).";
     } else {
-        $username = $_POST['username'] ?? '';
+        $username = mb_strtolower(trim($_POST['username'] ?? ''));
         $password = $_POST['password'] ?? '';
 
         $users = load_users($users_file);
         $authenticated = false;
 
         foreach ($users as $user) {
-            if (hash_equals($user['username'], $username) && password_verify($password, $user['password_hash'] ?? '')) {
+            if (hash_equals(mb_strtolower(trim($user['username'])), $username) && password_verify($password, $user['password_hash'] ?? '')) {
                 $authenticated = true;
                 break;
             }
@@ -268,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php echo csrf_field(); ?>
             <div class="form-group">
                 <label>Nom d'utilisateur</label>
-                <input type="text" name="username" placeholder="Entrez votre nom d'utilisateur" required autofocus>
+                <input type="text" name="username" placeholder="Entrez votre nom d'utilisateur" required autofocus autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username">
             </div>
 
             <div class="form-group">
