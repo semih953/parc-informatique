@@ -3,6 +3,7 @@ $page_title = 'Ajouter Logiciel - Parc Informatique DITIB France';
 $current_page = 'ajouter';
 require_once 'dataManager.php';
 
+$personnes = $dataManager->read('personnes');
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'nombre_licences' => $_POST['nombre_licences'] ?? 1,
         'cout_annuel' => $_POST['cout_annuel'] ?? 0,
         'date_expiration' => $_POST['date_expiration'] ?? '',
+        'utilisateur' => $_POST['utilisateur'] ?? '',
         'notes' => $_POST['notes'] ?? '',
         'image' => $imagePath
     ];
@@ -84,9 +86,23 @@ require_once 'header.php';
                     </div>
                 </div>
 
-                <div class="form-group" style="padding: 0 1.5rem;">
-                    <label>Date d'Expiration</label>
-                    <input type="date" name="date_expiration">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Date d'Expiration</label>
+                        <input type="date" name="date_expiration">
+                    </div>
+                    <div class="form-group">
+                        <label>Utilisateur Assigné</label>
+                        <select name="utilisateur">
+                            <option value="">-- Aucun --</option>
+                            <?php foreach ($personnes as $p): ?>
+                            <option value="<?php echo htmlspecialchars($p['nom']); ?>"><?php echo htmlspecialchars($p['nom']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <p style="font-size:12px; color:#94a3b8; margin-top:0.35rem;">
+                            <a href="ajout-utilisateur.php" style="color: var(--accent-color);">+ Ajouter un nouvel utilisateur</a>
+                        </p>
+                    </div>
                 </div>
 
                 <div class="form-group" style="padding: 1rem 1.5rem 0;">
@@ -96,7 +112,7 @@ require_once 'header.php';
 
                 <div class="form-group" style="padding: 1rem 1.5rem 0;">
                     <label>Image / Logo du logiciel</label>
-                    <div class="image-upload-zone">
+                    <div class="image-upload-zone" id="uploadZone">
                         <input type="file" name="image" id="imageInput" accept="image/*" style="display:none;">
                         <div class="upload-placeholder" onclick="document.getElementById('imageInput').click()">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="48" height="48" style="color:#aaa; margin-bottom:0.75rem;">
@@ -105,7 +121,12 @@ require_once 'header.php';
                             <p style="color:#666; margin:0; font-size:14px;">Cliquer pour choisir une image</p>
                             <p style="color:#aaa; margin:0.25rem 0 0; font-size:12px;">JPG, PNG, GIF, WEBP — max 5MB</p>
                         </div>
-                        <img id="imagePreview" src="" alt="Aperçu" style="display:none; max-width:100%; max-height:200px; border-radius:8px; margin-top:0.5rem;">
+                        <div id="imagePreviewWrapper" style="display:none; text-align:center;">
+                            <img id="imagePreview" src="" alt="Aperçu" style="max-width:100%; max-height:200px; border-radius:8px;">
+                            <div style="margin-top:0.5rem;">
+                                <button type="button" class="btn btn-secondary btn-small" onclick="document.getElementById('imageInput').click()">✏️ Modifier l'image</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -123,9 +144,8 @@ document.getElementById('imageInput').addEventListener('change', function(e) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(ev) {
-            const preview = document.getElementById('imagePreview');
-            preview.src = ev.target.result;
-            preview.style.display = 'block';
+            document.getElementById('imagePreview').src = ev.target.result;
+            document.getElementById('imagePreviewWrapper').style.display = 'block';
             document.querySelector('.upload-placeholder').style.display = 'none';
         };
         reader.readAsDataURL(file);

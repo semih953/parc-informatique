@@ -132,6 +132,64 @@ class DataManager {
         $data = $this->read($filename);
         return array_filter($data, $callback);
     }
+
+    /**
+     * Gérer l'upload d'une image (avec validation du vrai type MIME)
+     * Retourne le chemin relatif du fichier enregistré, ou null si aucun
+     * fichier valide n'a été envoyé.
+     *
+     * @param string $fieldName Nom du champ <input type="file"> (ex: 'image')
+     * @param string $uploadDir Dossier de destination (par défaut 'uploads/')
+     */
+    public function handleImageUpload($fieldName, $uploadDir = 'uploads/') {
+        // Aucun fichier envoyé -> ce n'est pas une erreur, juste rien à faire
+        if (empty($_FILES[$fieldName]) || $_FILES[$fieldName]['error'] === UPLOAD_ERR_NO_FILE) {
+            return null;
+        }
+
+        $file = $_FILES[$fieldName];
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            return null;
+        }
+
+        // Limite de taille : 5 Mo
+        $maxSize = 5 * 1024 * 1024;
+        if ($file['size'] > $maxSize) {
+            return null;
+        }
+
+        // Vérification du vrai type MIME du fichier (pas seulement son extension)
+        $allowedMimes = [
+            'image/jpeg' => 'jpg',
+            'image/png'  => 'png',
+            'image/gif'  => 'gif',
+            'image/webp' => 'webp',
+        ];
+
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mime = $finfo->file($file['tmp_name']);
+
+        if (!isset($allowedMimes[$mime])) {
+            return null;
+        }
+
+        // Créer le dossier uploads/ si nécessaire
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0750, true);
+        }
+
+        // Nom de fichier aléatoire pour éviter les collisions et les noms malveillants
+        $extension = $allowedMimes[$mime];
+        $newFilename = bin2hex(random_bytes(16)) . '.' . $extension;
+        $destination = $uploadDir . $newFilename;
+
+        if (!move_uploaded_file($file['tmp_name'], $destination)) {
+            return null;
+        }
+
+        return $destination;
+    }
 }
 
 // Instance globale

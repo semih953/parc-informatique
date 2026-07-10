@@ -1,6 +1,7 @@
 <?php
 $page_title = 'Supprimer Compte - Parc Informatique DITIB France';
 $current_page = 'comptes';
+require_once 'security.php';      // ← sessions sécurisées + csrf_verify()
 require_once 'dataManager.php';
 
 $id = $_GET['id'] ?? null;
@@ -25,6 +26,7 @@ if (!$compte) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmer'])) {
+    csrf_verify();  // ← BLOQUE si token invalide
     $dataManager->delete('comptes', $id);
     header('Location: comptes.php?deleted=1');
     exit;

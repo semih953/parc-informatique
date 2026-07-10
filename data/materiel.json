@@ -1,1 +1,17 @@
-[]
+[
+    {
+        "id_equipement": "so",
+        "type_equipement": "Ordinateur Portable",
+        "societe": "Ditib France",
+        "marque": "s",
+        "modele": "sd",
+        "numero_serie": "s",
+        "emplacement": "",
+        "utilisateur": "semih sahin",
+        "statut": "actif",
+        "notes": "",
+        "image": "uploads\/41b50d211f654043cd4e1c69653b18f0.png",
+        "id": 1,
+        "date_creation": "2026-06-18 10:33:30"
+    }
+]

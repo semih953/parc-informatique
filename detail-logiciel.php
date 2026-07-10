@@ -69,12 +69,16 @@ require_once 'header.php';
                     <div class="detail-value"><?php echo date('d/m/Y', strtotime($logiciel['date_expiration'])); ?></div>
                 </div>
                 <?php endif; ?>
+                <div class="detail-item">
+                    <div class="detail-label">Utilisateur Assigné</div>
+                    <div class="detail-value"><?php echo htmlspecialchars($logiciel['utilisateur'] ?? '-'); ?></div>
+                </div>
             </div>
 
             <?php if (!empty($logiciel['notes'])): ?>
             <div style="margin-top: 2rem; padding: 1.5rem; background: #f8fafc; border-radius: 8px;">
                 <h3 style="margin-bottom: 0.5rem; color: #475569;">Notes</h3>
-                <p style="color: #64748b;"><?php echo nl2br(htmlspecialchars($logiciel['notes'])); ?></p>
+                <p stcdyle="color: #64748b;"><?php echo nl2br(htmlspecialchars($logiciel['notes'])); ?></p>
             </div>
             <?php endif; ?>
 

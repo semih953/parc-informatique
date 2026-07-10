@@ -3,6 +3,7 @@ $page_title = 'Ajouter Matériel - Parc Informatique DITIB France';
 $current_page = 'ajouter';
 require_once 'dataManager.php';
 
+$personnes = $dataManager->read('personnes');
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -96,7 +97,15 @@ require_once 'header.php';
                     </div>
                     <div class="form-group">
                         <label>Utilisateur Assigné</label>
-                        <input type="text" name="utilisateur" placeholder="Ex: Jean Dupont">
+                        <select name="utilisateur">
+                            <option value="">-- Aucun --</option>
+                            <?php foreach ($personnes as $p): ?>
+                            <option value="<?php echo htmlspecialchars($p['nom']); ?>"><?php echo htmlspecialchars($p['nom']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <p style="font-size:12px; color:#94a3b8; margin-top:0.35rem;">
+                            <a href="ajout-utilisateur.php" style="color: var(--accent-color);">+ Ajouter un nouvel utilisateur</a>
+                        </p>
                     </div>
                 </div>
 
@@ -126,7 +135,12 @@ require_once 'header.php';
                             <p style="color:#666; margin:0; font-size:14px;">Cliquer pour choisir une image</p>
                             <p style="color:#aaa; margin:0.25rem 0 0; font-size:12px;">JPG, PNG, GIF, WEBP — max 5MB</p>
                         </div>
-                        <img id="imagePreview" src="" alt="Aperçu" style="display:none; max-width:100%; max-height:200px; border-radius:8px; margin-top:0.5rem;">
+                        <div id="imagePreviewWrapper" style="display:none; text-align:center;">
+                            <img id="imagePreview" src="" alt="Aperçu" style="max-width:100%; max-height:200px; border-radius:8px;">
+                            <div style="margin-top:0.5rem;">
+                                <button type="button" class="btn btn-secondary btn-small" onclick="document.getElementById('imageInput').click()">✏️ Modifier l'image</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -144,9 +158,8 @@ document.getElementById('imageInput').addEventListener('change', function(e) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(ev) {
-            const preview = document.getElementById('imagePreview');
-            preview.src = ev.target.result;
-            preview.style.display = 'block';
+            document.getElementById('imagePreview').src = ev.target.result;
+            document.getElementById('imagePreviewWrapper').style.display = 'block';
             document.querySelector('.upload-placeholder').style.display = 'none';
         };
         reader.readAsDataURL(file);

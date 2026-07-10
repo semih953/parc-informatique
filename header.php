@@ -53,6 +53,12 @@ require_once 'auth.php';
         </nav>
 
         <div class="sidebar-footer">
+            <a href="utilisateurs.php" <?php echo ($current_page ?? '') == 'utilisateurs' ? 'style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0.65rem 1rem; margin-bottom: 0.5rem; color: #fff; text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; background: rgba(255,255,255,0.1);"' : 'style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0.65rem 1rem; margin-bottom: 0.5rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;"'; ?>>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 3.13a4 4 0 100-7.75" />
+                </svg>
+                Utilisateurs
+            </a>
             <a href="changer-mdp.php" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0.65rem 1rem; margin-bottom: 0.5rem; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />

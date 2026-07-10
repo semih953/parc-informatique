@@ -1,6 +1,7 @@
 <?php
 $page_title = 'Modifier Compte - Parc Informatique DITIB France';
 $current_page = 'comptes';
+require_once 'security.php';      // ← sessions sécurisées + csrf_verify()
 require_once 'dataManager.php';
 require_once 'cryptoHelper.php';
 
@@ -23,17 +24,19 @@ if (!$compte) {
     exit;
 }
 
-$identifiant_clair   = decryptData($compte['identifiant'] ?? '');
-$mot_de_passe_clair  = decryptData($compte['mot_de_passe'] ?? '');
+$identifiant_clair  = decryptData($compte['identifiant'] ?? '');
+$mot_de_passe_clair = decryptData($compte['mot_de_passe'] ?? '');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();  // ← BLOQUE si token invalide
+
     $data = [
-        'nom'          => $_POST['nom'] ?? '',
-        'service'      => $_POST['service'] ?? '',
-        'identifiant'  => encryptData($_POST['identifiant'] ?? ''),
+        'nom'          => htmlspecialchars(trim($_POST['nom'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        'service'      => htmlspecialchars(trim($_POST['service'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        'identifiant'  => encryptData(trim($_POST['identifiant'] ?? '')),
         'mot_de_passe' => encryptData($_POST['mot_de_passe'] ?? ''),
-        'url'          => $_POST['url'] ?? '',
-        'notes'        => $_POST['notes'] ?? ''
+        'url'          => filter_var(trim($_POST['url'] ?? ''), FILTER_SANITIZE_URL),
+        'notes'        => htmlspecialchars(trim($_POST['notes'] ?? ''), ENT_QUOTES, 'UTF-8'),
     ];
 
     $dataManager->update('comptes', $id, $data);
@@ -66,7 +69,7 @@ require_once 'header.php';
 
     <div class="content-card">
         <form method="POST">
-                <?php echo csrf_field(); ?>
+            <?php echo csrf_field(); ?>
             <div class="form-grid">
                 <div class="form-group">
                     <label>Nom du Compte *</label>
@@ -110,7 +113,7 @@ require_once 'header.php';
 
             <div style="padding: 0 1.5rem 1.5rem; display: flex; gap: 1rem;">
                 <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-                <a href="detail-compte.php?id=<?php echo $compte['id']; ?>" class="btn btn-secondary">Annuler</a>
+                <a href="detail-compte.php?id=<?php echo (int)$compte['id']; ?>" class="btn btn-secondary">Annuler</a>
             </div>
         </form>
     </div>

@@ -76,6 +76,10 @@ require_once 'header.php';
                 </div>
                 <?php endif; ?>
                 <div class="detail-item">
+                    <div class="detail-label">Utilisateur Assigné</div>
+                    <div class="detail-value"><?php echo htmlspecialchars($equipement['utilisateur'] ?? '-'); ?></div>
+                </div>
+                <div class="detail-item">
                     <div class="detail-label">Statut</div>
                     <div class="detail-value">
                         <?php
@@ -99,7 +103,7 @@ require_once 'header.php';
             <?php if (!empty($equipement['image']) && file_exists($equipement['image'])): ?>
             <div style="margin-top: 2rem; padding: 1.5rem; background: #f8fafc; border-radius: 8px;">
                 <h3 style="margin-bottom: 1rem; color: #475569;">Photo de l'équipement</h3>
-                <img src="<?php echo htmlspecialchars($equipement['image']); ?>" alt="Photo équipement réseau" style="max-width:400px; max-height:300px; border-radius:8px; border:1px solid #ddd; object-fit:contain;">
+                <img src="<?php echo htmlspecialchars($equipement['image']); ?>" alt="Photo équipement" style="max-width:400px; max-height:300px; border-radius:8px; border:1px solid #ddd; object-fit:contain;">
             </div>
             <?php endif; ?>
 
