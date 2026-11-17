@@ -31,7 +31,7 @@ $materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, 
         </div>
 
         <?php if (isset($_GET['deleted']) && $_GET['deleted'] == 1): ?>
-        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 14px; margin-bottom: 1.5rem;">
             ✅ Équipement supprimé avec succès !
         </div>
         <?php endif; ?>
@@ -139,10 +139,10 @@ $materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, 
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Nom</th>
                             <th>Société</th>
                             <th>Type</th>
                             <th>Marque/Modèle</th>
-                            <th>Emplacement</th>
                             <th>Statut</th>
                             <th>Actions</th>
                         </tr>
@@ -157,10 +157,10 @@ $materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, 
                         ?>
                         <tr>
                             <td><strong><?php echo htmlspecialchars($mat['id_equipement'] ?? 'N/A'); ?></strong></td>
+                            <td><?php echo htmlspecialchars($mat['nom'] ?? '') ?: '<span style="color: var(--text-light);">-</span>'; ?></td>
                             <td><?php echo htmlspecialchars($mat['societe'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars($mat['type_equipement'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars(($mat['marque'] ?? '') . ' ' . ($mat['modele'] ?? '')); ?></td>
-                            <td><?php echo htmlspecialchars($mat['emplacement'] ?? '-'); ?></td>
                             <td><span class="badge <?php echo $badgeClass; ?>"><?php echo ucfirst($statut); ?></span></td>
                             <td>
                                 <a href="detail-materiel.php?id=<?php echo $mat['id']; ?>" class="action-btn action-view">Voir</a>

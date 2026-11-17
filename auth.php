@@ -36,3 +36,19 @@ if (!isset($_SESSION['regenerated_at']) || (time() - $_SESSION['regenerated_at']
 
 // ===== VÉRIFICATION CSRF AUTOMATIQUE SUR TOUS LES POST =====
 csrf_verify();
+
+// ===== LE COMPTE EXISTE TOUJOURS ? (supprimé par un admin = déconnexion) =====
+require_once __DIR__ . '/users-lib.php';
+$__current_user = current_user();
+if ($__current_user === null) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
+
+// ===== CHANGEMENT DE MOT DE PASSE OBLIGATOIRE (mot de passe provisoire) =====
+if (!empty($__current_user['must_change']) && basename($_SERVER['SCRIPT_NAME']) !== 'changer-mdp.php') {
+    header('Location: changer-mdp.php?force=1');
+    exit;
+}

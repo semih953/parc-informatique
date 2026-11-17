@@ -26,7 +26,7 @@ require_once 'header.php';
 <div class="container">
         <div class="page-header">
             <h1 class="page-title">Détails de l'Équipement</h1>
-            <p class="page-subtitle"><?php echo htmlspecialchars($materiel['id_equipement']); ?></p>
+            <p class="page-subtitle"><?php echo htmlspecialchars($materiel['id_equipement'] . (!empty($materiel['nom']) ? ' · ' . $materiel['nom'] : '')); ?></p>
         </div>
 
         <div class="content-card">
@@ -42,6 +42,10 @@ require_once 'header.php';
                 <div class="detail-item">
                     <div class="detail-label">ID Équipement</div>
                     <div class="detail-value"><?php echo htmlspecialchars($materiel['id_equipement'] ?? '-'); ?></div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Nom</div>
+                    <div class="detail-value"><?php echo htmlspecialchars($materiel['nom'] ?? '') ?: '-'; ?></div>
                 </div>
                 <div class="detail-item">
                     <div class="detail-label">Société</div>
@@ -64,10 +68,6 @@ require_once 'header.php';
                     <div class="detail-value"><?php echo htmlspecialchars($materiel['numero_serie'] ?? '-'); ?></div>
                 </div>
                 <div class="detail-item">
-                    <div class="detail-label">Emplacement</div>
-                    <div class="detail-value"><?php echo htmlspecialchars($materiel['emplacement'] ?? '-'); ?></div>
-                </div>
-                <div class="detail-item">
                     <div class="detail-label">Utilisateur Assigné</div>
                     <div class="detail-value"><?php echo htmlspecialchars($materiel['utilisateur'] ?? '-'); ?></div>
                 </div>
@@ -87,21 +87,21 @@ require_once 'header.php';
             </div>
 
             <?php if (!empty($materiel['notes'])): ?>
-            <div style="margin-top: 2rem; padding: 1.5rem; background: #f8fafc; border-radius: 8px;">
+            <div style="margin-top: 2rem; padding: 1.5rem; background: #f8fafc; border-radius: 14px;">
                 <h3 style="margin-bottom: 0.5rem; color: #475569;">Notes</h3>
                 <p style="color: #64748b;"><?php echo nl2br(htmlspecialchars($materiel['notes'])); ?></p>
             </div>
             <?php endif; ?>
 
             <?php if (!empty($materiel['image']) && file_exists($materiel['image'])): ?>
-            <div style="margin-top: 2rem; padding: 1.5rem; background: #f8fafc; border-radius: 8px;">
+            <div style="margin-top: 2rem; padding: 1.5rem; background: #f8fafc; border-radius: 14px;">
                 <h3 style="margin-bottom: 1rem; color: #475569;">Photo de l'équipement</h3>
                 <img src="<?php echo htmlspecialchars($materiel['image']); ?>" alt="Photo équipement" style="max-width:400px; max-height:300px; border-radius:8px; border:1px solid #ddd; object-fit:contain;">
             </div>
             <?php endif; ?>
 
             <?php if (!empty($materiel['date_creation'])): ?>
-            <div style="margin-top: 2rem; padding: 1rem; background: #f1f5f9; border-radius: 8px; font-size: 0.875rem; color: #64748b;">
+            <div style="margin-top: 2rem; padding: 1rem; background: #f1f5f9; border-radius: 14px; font-size: 0.875rem; color: #64748b;">
                 Ajouté le <?php echo date('d/m/Y à H:i', strtotime($materiel['date_creation'])); ?>
             </div>
             <?php endif; ?>

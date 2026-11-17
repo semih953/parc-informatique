@@ -1,26 +1,17 @@
 [
     {
         "username": "semih@ditibfrance.fr",
-        "password_hash": "$2y$12$wIzAATjE\/9IMwdlovBijAuunthOxkMGKjEHK1j02SSwEkvTRDf\/\/W"
+        "password_hash": "$2y$12$wIzAATjE\/9IMwdlovBijAuunthOxkMGKjEHK1j02SSwEkvTRDf\/\/W",
+        "role": "admin"
     },
     {
         "username": "oguzhan.yildiz@ditibfrance.fr",
-        "password_hash": "$2y$12$tQC8bnuozAbosy8wP7z1quqxek2\/hJicaVXAbJG6tvX58.JxWDzI6"
-    },
-    {
-        "username": "beytullah.sonkaya@ditibfrance.fr",
-        "password_hash": "$2y$12$iJb59UDKVrUB0hSLI5Ix6.8M5\/dmFOoXAjt1XKYfDRnN4eivT2Pw."
-    },
-    {
-        "username": "mehmet.yuksel@ditibfrance.fr",
-        "password_hash": "$2y$12$Ls.y9F\/.0U50WFUvzYVEouTMJw7Go5mY5c9N5zSNOLFceABYMlb7q"
+        "password_hash": "$2y$12$EL9evOhJQC2KjfQqJsnJMeQoftmS.3k58lOg\/fag1BoC5l2Mj2ySe",
+        "must_change": true,
+        "role": "admin"
     },
     {
         "username": "rahman.fatsal@ditibfrance.fr",
         "password_hash": "$2y$12$vEWK4HiIaBw5get.gyXoxe5uipneCDfAMcBOLmZta9YhU.26ogz7K"
-    },
-    {
-        "username": "emre.auclerc@ditibfrance.fr",
-        "password_hash": "$2y$12$hXtvQR4NO4k0\/OEW0ulf8uqmANqEFytJ2XLbsT2Dj7p\/u43cPXRLm"
     }
 ]

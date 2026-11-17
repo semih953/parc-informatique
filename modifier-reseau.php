@@ -29,11 +29,11 @@ $nomsPersonnes = array_column($personnes, 'nom');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
         'id_equipement' => $_POST['id_equipement'] ?? '',
+        'nom' => trim($_POST['nom'] ?? ''),
         'type_equipement' => $_POST['type_equipement'] ?? '',
         'marque' => $_POST['marque'] ?? '',
         'modele' => $_POST['modele'] ?? '',
         'adresse_ip' => $_POST['adresse_ip'] ?? '',
-        'emplacement' => $_POST['emplacement'] ?? '',
         'ports_totaux' => $_POST['ports_totaux'] ?? 0,
         'ports_utilises' => $_POST['ports_utilises'] ?? 0,
         'utilisateur' => $_POST['utilisateur'] ?? '',
@@ -68,7 +68,7 @@ require_once 'header.php';
         </div>
 
         <?php if ($message): ?>
-        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 14px; margin-bottom: 2rem;">
             <?php echo $message; ?>
         </div>
         <?php endif; ?>
@@ -80,6 +80,10 @@ require_once 'header.php';
                     <div class="form-group">
                         <label>ID Équipement *</label>
                         <input type="text" name="id_equipement" value="<?php echo htmlspecialchars($equipement['id_equipement'] ?? ''); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" name="nom" value="<?php echo htmlspecialchars($equipement['nom'] ?? ''); ?>" placeholder="Ex: Switch principal, Borne Wi-Fi RDC">
                     </div>
                     <div class="form-group">
                         <label>Type d'Équipement *</label>
@@ -111,10 +115,6 @@ require_once 'header.php';
                     <div class="form-group">
                         <label>Adresse IP</label>
                         <input type="text" name="adresse_ip" value="<?php echo htmlspecialchars($equipement['adresse_ip'] ?? ''); ?>">
-                    </div>
-                    <div class="form-group">
-                        <label>Emplacement</label>
-                        <input type="text" name="emplacement" value="<?php echo htmlspecialchars($equipement['emplacement'] ?? ''); ?>">
                     </div>
                 </div>
 

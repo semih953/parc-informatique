@@ -14,7 +14,7 @@ require_once 'header.php';
         </div>
 
         <?php if (isset($_GET['deleted']) && $_GET['deleted'] == 1): ?>
-        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 14px; margin-bottom: 2rem;">
             ✅ Équipement réseau supprimé avec succès !
         </div>
         <?php endif; ?>
@@ -38,10 +38,10 @@ require_once 'header.php';
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Nom</th>
                             <th>Type</th>
                             <th>Modèle</th>
                             <th>Adresse IP</th>
-                            <th>Emplacement</th>
                             <th>Statut</th>
                             <th>Actions</th>
                         </tr>
@@ -50,10 +50,10 @@ require_once 'header.php';
                         <?php foreach ($reseau as $res): ?>
                         <tr>
                             <td><strong><?php echo htmlspecialchars($res['id_equipement'] ?? 'N/A'); ?></strong></td>
+                            <td><?php echo htmlspecialchars($res['nom'] ?? '') ?: '<span style="color: var(--text-light);">-</span>'; ?></td>
                             <td><?php echo htmlspecialchars($res['type_equipement'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars(($res['marque'] ?? '') . ' ' . ($res['modele'] ?? '')); ?></td>
                             <td><?php echo htmlspecialchars($res['adresse_ip'] ?? '-'); ?></td>
-                            <td><?php echo htmlspecialchars($res['emplacement'] ?? '-'); ?></td>
                             <td>
                                 <?php
                                 $statut = $res['statut'] ?? 'actif';

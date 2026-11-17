@@ -29,12 +29,12 @@ $nomsPersonnes = array_column($personnes, 'nom');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
         'id_equipement' => $_POST['id_equipement'] ?? '',
+        'nom' => trim($_POST['nom'] ?? ''),
         'type_equipement' => $_POST['type_equipement'] ?? '',
         'societe' => $_POST['societe'] ?? '',
         'marque' => $_POST['marque'] ?? '',
         'modele' => $_POST['modele'] ?? '',
         'numero_serie' => $_POST['numero_serie'] ?? '',
-        'emplacement' => $_POST['emplacement'] ?? '',
         'utilisateur' => $_POST['utilisateur'] ?? '',
         'statut' => $_POST['statut'] ?? 'actif',
         'notes' => $_POST['notes'] ?? ''
@@ -67,7 +67,7 @@ require_once 'header.php';
         </div>
 
         <?php if ($message): ?>
-        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 14px; margin-bottom: 2rem;">
             <?php echo $message; ?>
         </div>
         <?php endif; ?>
@@ -79,6 +79,10 @@ require_once 'header.php';
                     <div class="form-group">
                         <label>ID Équipement *</label>
                         <input type="text" name="id_equipement" value="<?php echo htmlspecialchars($materiel['id_equipement'] ?? ''); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" name="nom" value="<?php echo htmlspecialchars($materiel['nom'] ?? ''); ?>" placeholder="Ex: PC accueil, Portable de Semih">
                     </div>
                     <div class="form-group">
                         <label>Société *</label>
@@ -122,10 +126,6 @@ require_once 'header.php';
                 </div>
 
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label>Emplacement</label>
-                        <input type="text" name="emplacement" value="<?php echo htmlspecialchars($materiel['emplacement'] ?? ''); ?>">
-                    </div>
                     <div class="form-group">
                         <label>Utilisateur Assigné</label>
                         <select name="utilisateur">

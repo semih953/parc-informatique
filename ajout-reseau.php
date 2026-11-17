@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imagePath = $dataManager->handleImageUpload('image');
     $data = [
         'id_equipement' => $_POST['id_equipement'] ?? '',
+        'nom' => trim($_POST['nom'] ?? ''),
         'type_equipement' => $_POST['type_equipement'] ?? '',
         'marque' => $_POST['marque'] ?? '',
         'modele' => $_POST['modele'] ?? '',
         'adresse_ip' => $_POST['adresse_ip'] ?? '',
-        'emplacement' => $_POST['emplacement'] ?? '',
         'ports_totaux' => $_POST['ports_totaux'] ?? 0,
         'ports_utilises' => $_POST['ports_utilises'] ?? 0,
         'utilisateur' => $_POST['utilisateur'] ?? '',
@@ -36,7 +36,7 @@ require_once 'header.php';
         </div>
 
         <?php if ($message): ?>
-        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+        <div style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 14px; margin-bottom: 2rem;">
             <?php echo $message; ?>
             <a href="reseau.php" style="color: #065f46; text-decoration: underline; margin-left: 1rem;">Voir la liste</a>
         </div>
@@ -48,7 +48,11 @@ require_once 'header.php';
                 <div class="form-grid">
                     <div class="form-group">
                         <label>ID Équipement *</label>
-                        <input type="text" name="id_equipement" placeholder="Ex: SW-001" required>
+                        <input type="text" name="id_equipement" placeholder="Ex: Bureau 2" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" name="nom" placeholder="Ex: Switch principal, Borne Wi-Fi RDC">
                     </div>
                     <div class="form-group">
                         <label>Type d'Équipement *</label>
@@ -80,10 +84,6 @@ require_once 'header.php';
                     <div class="form-group">
                         <label>Adresse IP</label>
                         <input type="text" name="adresse_ip" placeholder="Ex: 192.168.1.10">
-                    </div>
-                    <div class="form-group">
-                        <label>Emplacement</label>
-                        <input type="text" name="emplacement" placeholder="Ex: Salle Serveur">
                     </div>
                 </div>
 

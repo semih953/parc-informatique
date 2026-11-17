@@ -129,6 +129,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - Parc Informatique DITIB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         body {
@@ -136,14 +139,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            background: radial-gradient(circle at 20% 20%, #9a6a8e 0%, transparent 45%), radial-gradient(circle at 85% 80%, #00A09D 0%, transparent 40%), linear-gradient(135deg, #7d5375 0%, #5c3b55 100%);
         }
 
         .login-container {
             background: white;
             padding: 3rem;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 24px 60px rgba(40, 10, 40, 0.35);
             width: 100%;
             max-width: 420px;
         }
@@ -165,13 +168,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .login-title {
             font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-weight: 800;
+            color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
 
         .login-subtitle {
-            color: var(--text-secondary);
+            color: var(--text-medium);
             font-size: 0.95rem;
         }
 
@@ -188,25 +191,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 100%;
             padding: 0.75rem;
             border: 2px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 14px;
             font-size: 0.95rem;
             transition: all 0.2s ease;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: inherit;
+            background-color: #fcfbfd;
+            color: var(--text-dark);
         }
 
         .login-form input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 4px rgba(113, 75, 103, 0.12);
         }
 
         .error-message {
             background: #fee2e2;
             color: #991b1b;
             padding: 1rem;
-            border-radius: 8px;
+            border-radius: 14px;
             margin-bottom: 1.5rem;
             text-align: center;
             font-weight: 500;
@@ -216,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: #dbeafe;
             color: #1e40af;
             padding: 1rem;
-            border-radius: 8px;
+            border-radius: 14px;
             margin-bottom: 1.5rem;
             text-align: center;
             font-weight: 500;
@@ -228,18 +231,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 14px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
+            font-family: inherit;
         }
 
         .btn-login:hover {
-            background: var(--primary-dark);
+            background: var(--primary-hover);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 10px 20px rgba(113, 75, 103, 0.3);
         }
     </style>
 </head>
@@ -264,7 +267,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <form method="POST" class="login-form">
-                <?php echo csrf_field(); ?>
             <?php echo csrf_field(); ?>
             <div class="form-group">
                 <label>Nom d'utilisateur</label>
