@@ -4,6 +4,13 @@ $current_page = 'reseau';
 require_once 'dataManager.php';
 
 $reseau = $dataManager->read('reseau');
+
+// Utilisateurs (pour afficher et lier la personne assignée)
+$personnes = $dataManager->read('personnes');
+$idsPersonnes = [];
+foreach ($personnes as $p) {
+    if (!empty($p['nom'])) $idsPersonnes[$p['nom']] = $p['id'];
+}
 require_once 'header.php';
 ?>
 
@@ -39,6 +46,7 @@ require_once 'header.php';
                         <tr>
                             <th>ID</th>
                             <th>Nom</th>
+                            <th>Assigné à</th>
                             <th>Type</th>
                             <th>Modèle</th>
                             <th>Adresse IP</th>
@@ -51,6 +59,16 @@ require_once 'header.php';
                         <tr>
                             <td><strong><?php echo htmlspecialchars($res['id_equipement'] ?? 'N/A'); ?></strong></td>
                             <td><?php echo htmlspecialchars($res['nom'] ?? '') ?: '<span style="color: var(--text-light);">-</span>'; ?></td>
+                            <td>
+                                <?php $assigne = trim($res['utilisateur'] ?? ''); ?>
+                                <?php if ($assigne === ''): ?>
+                                    <span style="color: var(--text-light);">Non assigné</span>
+                                <?php elseif (isset($idsPersonnes[$assigne])): ?>
+                                    <a href="detail-utilisateur.php?id=<?php echo urlencode($idsPersonnes[$assigne]); ?>" style="color: var(--primary-color); font-weight: 500;"><?php echo htmlspecialchars($assigne); ?></a>
+                                <?php else: ?>
+                                    <?php echo htmlspecialchars($assigne); ?>
+                                <?php endif; ?>
+                            </td>
                             <td><?php echo htmlspecialchars($res['type_equipement'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars(($res['marque'] ?? '') . ' ' . ($res['modele'] ?? '')); ?></td>
                             <td><?php echo htmlspecialchars($res['adresse_ip'] ?? '-'); ?></td>

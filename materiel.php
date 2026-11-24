@@ -6,20 +6,33 @@ require_once 'header.php';
 
 $materiels = $dataManager->read('materiel');
 
+// Utilisateurs (pour afficher et lier la personne assignée)
+$personnes = $dataManager->read('personnes');
+$idsPersonnes = [];
+foreach ($personnes as $p) {
+    if (!empty($p['nom'])) $idsPersonnes[$p['nom']] = $p['id'];
+}
+
 // Récupérer les filtres
 $filtre_type    = $_GET['type'] ?? '';
 $filtre_societe = $_GET['societe'] ?? '';
 $filtre_statut  = $_GET['statut'] ?? '';
+$filtre_utilisateur = $_GET['utilisateur'] ?? '';
 
 // Extraire les types uniques depuis les données
 $types_disponibles = array_unique(array_filter(array_column($materiels, 'type_equipement')));
 sort($types_disponibles);
 
 // Appliquer les filtres
-$materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, $filtre_societe, $filtre_statut) {
+$materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, $filtre_societe, $filtre_statut, $filtre_utilisateur) {
     if ($filtre_type    && ($mat['type_equipement'] ?? '') !== $filtre_type)    return false;
     if ($filtre_societe && ($mat['societe'] ?? '')         !== $filtre_societe) return false;
     if ($filtre_statut  && ($mat['statut'] ?? '')          !== $filtre_statut)  return false;
+    if ($filtre_utilisateur === '__aucun__') {
+        if (trim($mat['utilisateur'] ?? '') !== '') return false;
+    } elseif ($filtre_utilisateur && trim($mat['utilisateur'] ?? '') !== $filtre_utilisateur) {
+        return false;
+    }
     return true;
 });
 ?>
@@ -54,7 +67,7 @@ $materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, 
                     </svg>
                     Filtres
                 </h2>
-                <?php if ($filtre_type || $filtre_societe || $filtre_statut): ?>
+                <?php if ($filtre_type || $filtre_societe || $filtre_statut || $filtre_utilisateur): ?>
                 <a href="materiel.php" class="btn btn-secondary btn-small">✕ Réinitialiser</a>
                 <?php endif; ?>
             </div>
@@ -97,12 +110,23 @@ $materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, 
                     </select>
                 </div>
 
+                <div style="flex:1; min-width:160px;">
+                    <label style="font-size:12px; color:var(--text-medium); text-transform:uppercase; letter-spacing:.5px; font-weight:600; display:block; margin-bottom:.4rem;">Assigné à</label>
+                    <select name="utilisateur" style="width:100%;">
+                        <option value="">Tout le monde</option>
+                        <option value="__aucun__" <?php echo $filtre_utilisateur === '__aucun__' ? 'selected' : ''; ?>>Non assigné</option>
+                        <?php foreach ($personnes as $p): if (empty($p['nom'])) continue; ?>
+                        <option value="<?php echo htmlspecialchars($p['nom']); ?>" <?php echo $filtre_utilisateur === $p['nom'] ? 'selected' : ''; ?>><?php echo htmlspecialchars($p['nom']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
                 <div>
                     <button type="submit" class="btn btn-primary">Filtrer</button>
                 </div>
             </form>
 
-            <?php if ($filtre_type || $filtre_societe || $filtre_statut): ?>
+            <?php if ($filtre_type || $filtre_societe || $filtre_statut || $filtre_utilisateur): ?>
             <div style="padding:0 1.5rem 1rem; display:flex; gap:.5rem; flex-wrap:wrap;">
                 <?php if ($filtre_type): ?>
                 <span style="background:#ede9fe;color:#5b21b6;padding:.3rem .75rem;border-radius:4px;font-size:12px;font-weight:500;">
@@ -117,6 +141,11 @@ $materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, 
                 <?php if ($filtre_statut): ?>
                 <span style="background:#d1fae5;color:#065f46;padding:.3rem .75rem;border-radius:4px;font-size:12px;font-weight:500;">
                     Statut : <?php echo htmlspecialchars($filtre_statut); ?>
+                </span>
+                <?php endif; ?>
+                <?php if ($filtre_utilisateur): ?>
+                <span style="background:#fce7f3;color:#9d174d;padding:.3rem .75rem;border-radius:4px;font-size:12px;font-weight:500;">
+                    Assigné à : <?php echo $filtre_utilisateur === '__aucun__' ? 'Non assigné' : htmlspecialchars($filtre_utilisateur); ?>
                 </span>
                 <?php endif; ?>
                 <span style="color:var(--text-light);font-size:12px;padding:.3rem 0;">
@@ -140,6 +169,7 @@ $materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, 
                         <tr>
                             <th>ID</th>
                             <th>Nom</th>
+                            <th>Assigné à</th>
                             <th>Société</th>
                             <th>Type</th>
                             <th>Marque/Modèle</th>
@@ -158,6 +188,16 @@ $materiels_filtres = array_filter($materiels, function($mat) use ($filtre_type, 
                         <tr>
                             <td><strong><?php echo htmlspecialchars($mat['id_equipement'] ?? 'N/A'); ?></strong></td>
                             <td><?php echo htmlspecialchars($mat['nom'] ?? '') ?: '<span style="color: var(--text-light);">-</span>'; ?></td>
+                            <td>
+                                <?php $assigne = trim($mat['utilisateur'] ?? ''); ?>
+                                <?php if ($assigne === ''): ?>
+                                    <span style="color: var(--text-light);">Non assigné</span>
+                                <?php elseif (isset($idsPersonnes[$assigne])): ?>
+                                    <a href="detail-utilisateur.php?id=<?php echo urlencode($idsPersonnes[$assigne]); ?>" style="color: var(--primary-color); font-weight: 500;"><?php echo htmlspecialchars($assigne); ?></a>
+                                <?php else: ?>
+                                    <?php echo htmlspecialchars($assigne); ?>
+                                <?php endif; ?>
+                            </td>
                             <td><?php echo htmlspecialchars($mat['societe'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars($mat['type_equipement'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars(($mat['marque'] ?? '') . ' ' . ($mat['modele'] ?? '')); ?></td>

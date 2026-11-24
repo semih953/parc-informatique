@@ -4,6 +4,13 @@ $current_page = 'logiciels';
 require_once 'dataManager.php';
 
 $logiciels = $dataManager->read('logiciels');
+
+// Utilisateurs (pour afficher et lier la personne assignée)
+$personnes = $dataManager->read('personnes');
+$idsPersonnes = [];
+foreach ($personnes as $p) {
+    if (!empty($p['nom'])) $idsPersonnes[$p['nom']] = $p['id'];
+}
 require_once 'header.php';
 ?>
 
@@ -41,6 +48,7 @@ require_once 'header.php';
                             <th>Version</th>
                             <th>Éditeur</th>
                             <th>Catégorie</th>
+                            <th>Assigné à</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -51,6 +59,16 @@ require_once 'header.php';
                             <td><?php echo htmlspecialchars($log['version'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars($log['editeur'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars($log['categorie'] ?? '-'); ?></td>
+                            <td>
+                                <?php $assigne = trim($log['utilisateur'] ?? ''); ?>
+                                <?php if ($assigne === ''): ?>
+                                    <span style="color: var(--text-light);">Non assigné</span>
+                                <?php elseif (isset($idsPersonnes[$assigne])): ?>
+                                    <a href="detail-utilisateur.php?id=<?php echo urlencode($idsPersonnes[$assigne]); ?>" style="color: var(--primary-color); font-weight: 500;"><?php echo htmlspecialchars($assigne); ?></a>
+                                <?php else: ?>
+                                    <?php echo htmlspecialchars($assigne); ?>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <a href="detail-logiciel.php?id=<?php echo $log['id']; ?>" class="action-btn action-view">Voir</a>
                                 <a href="modifier-logiciel.php?id=<?php echo $log['id']; ?>" class="action-btn action-edit">Modifier</a>
